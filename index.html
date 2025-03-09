@@ -9,66 +9,70 @@
             background-color: #18191c;
             color: white;
             font-family: Arial, sans-serif;
-            padding: 20px;
-            position: relative;
+            text-align: center;
+            margin: 0;
+            padding: 0;
             overflow: hidden;
-            overflow-y: auto; /* Enables scrolling */
-            height: 100vh; /* Full height */
-        }
-        
-        /* FBI Logos in 4 Corners */
-        .fbi-logo {
-            position: fixed;
-            width: 150px;
-            opacity: 0.08;
-            user-select: none;
         }
 
+        /* Background Design */
+        .fbi-logo {
+            position: absolute;
+            width: 100px;
+            opacity: 0.2;
+        }
         .top-left { top: 10px; left: 10px; }
         .top-right { top: 10px; right: 10px; }
         .bottom-left { bottom: 10px; left: 10px; }
         .bottom-right { bottom: 10px; right: 10px; }
 
-        /* Floating glowing particles */
-        .particle {
+        /* Light Ball Animation */
+        .light-ball {
             position: absolute;
             width: 5px;
             height: 5px;
             background-color: white;
-            opacity: 0.7;
+            opacity: 0.5;
             border-radius: 50%;
-            animation: floatUp linear infinite;
+            animation: floatUp 3s linear infinite;
         }
-
         @keyframes floatUp {
-            from {
-                transform: translateY(100vh);
-                opacity: 0.7;
-            }
-            to {
-                transform: translateY(-10vh);
-                opacity: 0;
-            }
+            from { transform: translateY(100vh); opacity: 0.5; }
+            to { transform: translateY(-10vh); opacity: 0; }
         }
 
-        .mafia-list {
+        /* Layout */
+        #container {
             display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: auto;
-            position: relative;
-            z-index: 2;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #mafia-list {
+            width: 30%;
+            overflow-y: auto;
+            background-color: #2c2f33;
+            padding: 20px;
+            border-right: 2px solid white;
+        }
+
+        #details {
+            width: 70%;
+            padding: 20px;
+            text-align: left;
         }
 
         .mafia-item {
             display: flex;
             align-items: center;
-            cursor: pointer;
             padding: 10px;
-            border: 1px solid white;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            background-color: #2c2f33;
+            cursor: pointer;
+            border-bottom: 1px solid white;
+            transition: background 0.3s;
+        }
+
+        .mafia-item:hover {
+            background-color: #7289da;
         }
 
         .mafia-logo {
@@ -76,140 +80,130 @@
             height: 50px;
             margin-right: 10px;
             border-radius: 50%;
-            object-fit: cover;
+            background-color: white;
         }
 
-        .mafia-details {
-            display: none;
-            padding: 15px;
-            border: 1px solid #7289da;
-            background-color: #2c2f33;
-            margin-top: 5px;
-            border-radius: 5px;
+        /* Mafia Details */
+        #details h2 {
+            margin-bottom: 5px;
         }
 
-        .carousel-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        #details a {
+            color: #7289da;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Image Carousel */
+        .carousel {
             position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin: auto;
+            width: 80%;
+            margin-top: 20px;
         }
 
-        .carousel-image {
+        .carousel img {
             width: 100%;
             height: auto;
-            display: none;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
-        .carousel-btn {
+        .prev, .next {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             background-color: rgba(0, 0, 0, 0.5);
             color: white;
             border: none;
-            padding: 10px;
             cursor: pointer;
+            padding: 10px;
             border-radius: 5px;
         }
 
-        .prev { left: 10px; }
-        .next { right: 10px; }
-
-        .active {
-            display: block;
-        }
+        .prev { left: 0; }
+        .next { right: 0; }
     </style>
 </head>
 <body>
 
-    <!-- FBI Logos in 4 Corners -->
+    <!-- Background Elements -->
     <img src="images/fbi-logo.png" class="fbi-logo top-left">
     <img src="images/fbi-logo.png" class="fbi-logo top-right">
     <img src="images/fbi-logo.png" class="fbi-logo bottom-left">
     <img src="images/fbi-logo.png" class="fbi-logo bottom-right">
+    
+    <!-- Floating Lights -->
+    <script>
+        for (let i = 0; i < 20; i++) {
+            let ball = document.createElement("div");
+            ball.className = "light-ball";
+            ball.style.left = Math.random() * 100 + "vw";
+            ball.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            document.body.appendChild(ball);
+        }
+    </script>
 
-    <h1 style="text-align: center;">Mafia List</h1>
+    <div id="container">
+        <!-- Mafia List -->
+        <div id="mafia-list">
+            <h2>Mafia Groups</h2>
+            <div id="mafia-items"></div>
+        </div>
 
-    <div class="mafia-list">
-        <!-- Mafia Groups -->
-        <script>
-            const mafias = [
-                { name: "LC Black Region", id: 32947012, description: "No longer active"},
-                { name: "| Staff Team |", id: 33657066, description: "No longer active"},
-                { name: "彡Slayers彡", id: 33703067, description: "No longer active" },
-                { name: "CARTEL REAPERS CLR", id: 15414932, description: "Currently Not Active"},
-                { name: "AB Anarchy Battalion", id: 32516858, description: "No longer active"},
-                { name: "TBE [The Black Eagle]", id: 33478611, description: "TBE, short for The Black Eagle, is a Organized Crime Group operating in ER:LC Tier 3 servers. Known for its grouped operations, mass RDM, and constantly targeting PD officers. Their boss is repo8781.", images: "mafia1-img1.jpg", "mafia1-img2.jpg", "mafia1-img3.jpg"},
-                { name: "TBL | The Black Lotus", id: 17284322, description: "No longer active"},
-                { name: "[TS] The Salieri", id: 15386109, description: "No Longer active"},
-                { name: "[FACILITY-92] Scorpion Brigade", id: 32483958, description: "Currently Not Active"},
-                { name: "SB-UNKNOWN-SB", id: 32659214, description: "No longer active"},
-                { name: "[FACILITY-24] Scorpion Brigade", id: 17356636, description: "Currently Not Active"},
-                { name: "MEN | Mafia El Noobio", id: 33364989, description: "Currently Not Active"},
-                { name: "Drago Roso", id: 33935316, description: "-", images: "mafia2-image1.jpg", "mafia2-img2.jpg", "mafia2-img3.jpg"},
-                { name: "[PS] | POLARS STRIKEFORCE", id: 34179918, description: "Currently Not Active"},
-                { name: "TBE The Black Eagles", id: 33478611, description: "-"}
-            ];
-
-            mafias.forEach((mafia, index) => {
-                let imagesHtml = mafia.images.map((img, imgIndex) => 
-                    `<img src="images/${img}" class="carousel-image mafia${index}-images ${imgIndex === 0 ? 'active' : ''}">`
-                ).join("");
-                
-                 document.write(`
-                 <div class="mafia-item" onclick="toggleDetails('mafia${index}')">
-                 <img src="images/mafia${index}-logo.jpg" alt="${mafia.name} Logo" class="mafia-logo">
-                 <span>${mafia.name}</span>
-                 </div>
-                 <div id="mafia${index}" class="mafia-details">
-                 <h2>${mafia.name}</h2>
-                 <p><a href="https://www.roblox.com/communities/${mafia.id}" target="_blank">Join on Roblox</a></p>
-                 <p>${mafia.description}</p>
-                 <div class="carousel-container">
-                 <button class="carousel-btn prev" onclick="changeImage(-1, 'mafia${index}-images')">❮</button>
-                 ${imagesHtml}
-                 <button class="carousel-btn next" onclick="changeImage(1, 'mafia${index}-images')">❯</button>
-                 </div>
-              </div>
-              `);
-            });
-
-
-        </script>
+        <!-- Mafia Details -->
+        <div id="details">
+            <h2>Click a mafia to see details</h2>
+        </div>
     </div>
 
     <script>
-        function toggleDetails(id) {
-            let details = document.getElementById(id);
-            details.style.display = details.style.display === "block" ? "none" : "block";
+        const mafiaData = [
+            { name: "TBE [The Black Eagle]", id: "33478611", logo: "images/TBE.png", desc: "TBE, short for The Black Eagle, is a Organized Crime Group operating in ER:LC Tier 3 servers. Known for its grouped operations, mass RDM, and constantly targeting PD officers. Their boss is repo8781.", images: ["images/TBE1.png", "images/TBE2.png", "images/TBE3.png"] },
+            { name: "SRT", id: , logo: "images/SRT.png", desc: "--", images: ["images/SRT1.png", "images/SRT2.png"] },
+            { name: "彡Slayers彡", id: "33703067", logo: "images/slayers.png", desc: "No Longer Active.", images: ["images/sl1.jpg", "images/sl2.jpg"] },
+            { name: "CARTEL REAPERS CLR", id: "15414932", logo: "images/cartel-reapers.png", desc: "No Longer Active", images: ["images/cr1.jpg", "images/cr2.jpg"] }
+        ];
+
+        // Populate mafia list
+        const mafiaList = document.getElementById("mafia-items");
+        mafiaData.forEach((mafia, index) => {
+            let div = document.createElement("div");
+            div.className = "mafia-item";
+            div.innerHTML = `<img src="${mafia.logo}" class="mafia-logo"><span>${mafia.name}</span>`;
+            div.onclick = () => showDetails(index);
+            mafiaList.appendChild(div);
+        });
+
+        // Show details
+        function showDetails(index) {
+            let mafia = mafiaData[index];
+            let detailsDiv = document.getElementById("details");
+            detailsDiv.innerHTML = `
+                <h2>${mafia.name}</h2>
+                <a href="https://www.roblox.com/communities/${mafia.id}" target="_blank">Visit Roblox Group</a>
+                <p>${mafia.desc}</p>
+                <div class="carousel">
+                    <button class="prev" onclick="prevImage(${index})">&#10094;</button>
+                    <img id="carousel-img" src="${mafia.images[0]}">
+                    <button class="next" onclick="nextImage(${index})">&#10095;</button>
+                </div>
+            `;
+            currentImageIndex = 0;
+            currentMafiaIndex = index;
         }
 
-        function changeImage(direction, className) {
-            let images = document.getElementsByClassName(className);
-            let activeIndex = Array.from(images).findIndex(img => img.classList.contains("active"));
+        // Image Carousel Functionality
+        let currentImageIndex = 0;
+        let currentMafiaIndex = 0;
 
-            images[activeIndex].classList.remove("active");
-            let newIndex = (activeIndex + direction + images.length) % images.length;
-            images[newIndex].classList.add("active");
+        function nextImage(index) {
+            currentImageIndex = (currentImageIndex + 1) % mafiaData[index].images.length;
+            document.getElementById("carousel-img").src = mafiaData[index].images[currentImageIndex];
         }
 
-        function createParticles() {
-            for (let i = 0; i < 50; i++) {
-                let particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDuration = Math.random() * 3 + 2 + "s";
-                document.body.appendChild(particle);
-                setTimeout(() => { particle.remove(); }, 5000);
-            }
+        function prevImage(index) {
+            currentImageIndex = (currentImageIndex - 1 + mafiaData[index].images.length) % mafiaData[index].images.length;
+            document.getElementById("carousel-img").src = mafiaData[index].images[currentImageIndex];
         }
-
-        setInterval(createParticles, 1000);
     </script>
 
 </body>
