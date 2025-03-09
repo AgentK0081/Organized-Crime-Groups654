@@ -157,27 +157,28 @@
             ];
 
             mafias.forEach((mafia, index) => {
-    let imagesHtml = mafia.images.map((img, imgIndex) => 
-        `<img src="images/${img}" class="carousel-image mafia${index}-images ${imgIndex === 0 ? 'active' : ''}">`
-    ).join("");
+                let imagesHtml = mafia.images.map((img, imgIndex) => 
+                    `<img src="images/${img}" class="carousel-image mafia${index}-images ${imgIndex === 0 ? 'active' : ''}">`
+                ).join("");
+                
+                 document.write(`
+                 <div class="mafia-item" onclick="toggleDetails('mafia${index}')">
+                 <img src="images/mafia${index}-logo.jpg" alt="${mafia.name} Logo" class="mafia-logo">
+                 <span>${mafia.name}</span>
+                 </div>
+                 <div id="mafia${index}" class="mafia-details">
+                 <h2>${mafia.name}</h2>
+                 <p><a href="https://www.roblox.com/communities/${mafia.id}" target="_blank">Join on Roblox</a></p>
+                 <p>${mafia.description}</p>
+                 <div class="carousel-container">
+                 <button class="carousel-btn prev" onclick="changeImage(-1, 'mafia${index}-images')">❮</button>
+                 ${imagesHtml}
+                 <button class="carousel-btn next" onclick="changeImage(1, 'mafia${index}-images')">❯</button>
+                 </div>
+              </div>
+              `);
+            });
 
-    document.write(`
-        <div class="mafia-item" onclick="toggleDetails('mafia${index}')">
-            <img src="images/mafia${index}-logo.jpg" alt="${mafia.name} Logo" class="mafia-logo">
-            <span>${mafia.name}</span>
-        </div>
-        <div id="mafia${index}" class="mafia-details">
-            <h2>${mafia.name}</h2>
-            <p><a href="https://www.roblox.com/communities/${mafia.id}" target="_blank">Join on Roblox</a></p>
-            <p>${mafia.description}</p>
-            <div class="carousel-container">
-                <button class="carousel-btn prev" onclick="changeImage(-1, 'mafia${index}-images')">❮</button>
-                ${imagesHtml}
-                <button class="carousel-btn next" onclick="changeImage(1, 'mafia${index}-images')">❯</button>
-            </div>
-        </div>
-    `);
-});
 
         </script>
     </div>
