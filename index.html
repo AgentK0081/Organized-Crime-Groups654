@@ -139,43 +139,46 @@
         <!-- Mafia Groups -->
         <script>
             const mafias = [
-                { name: "LC Black Region", id: 32947012 },
-                { name: "| Staff Team |", id: 33657066 },
-                { name: "彡Slayers彡", id: 33703067 },
-                { name: "CARTEL REAPERS CLR", id: 15414932 },
-                { name: "AB Anarchy Battalion", id: 32516858 },
-                { name: "X Gaming", id: 17307714 },
-                { name: "TBL | The Black Lotus", id: 17284322 },
-                { name: "[TS] The Salieri", id: 15386109 },
-                { name: "[FACILITY-92] Scorpion Brigade", id: 32483958 },
-                { name: "SB-UNKNOWN-SB", id: 32659214 },
-                { name: "[FACILITY-24] Scorpion Brigade", id: 17356636 },
-                { name: "MEN | Mafia El Noobio", id: 33364989 },
-                { name: "Drago Roso", id: 33935316 },
-                { name: "[PS] | POLARS STRIKEFORCE", id: 34179918 },
-                { name: "TBE The Black Eagles", id: 33478611 }
+                { name: "LC Black Region", id: 32947012, description: "No longer active"},
+                { name: "| Staff Team |", id: 33657066, description: "No longer active"},
+                { name: "彡Slayers彡", id: 33703067, description: "No longer active" },
+                { name: "CARTEL REAPERS CLR", id: 15414932, description: "Currently Not Active"},
+                { name: "AB Anarchy Battalion", id: 32516858, description: "No longer active"},
+                { name: "TBE [The Black Eagle]", id: 33478611, description: "TBE, short for The Black Eagle, is a Organized Crime Group operating in ER:LC Tier 3 servers. Known for its grouped operations, mass RDM, and constantly targeting PD officers. Their boss is repo8781.", images: "mafia1-img1.jpg", "mafia1-img2.jpg", "mafia1-img3.jpg"},
+                { name: "TBL | The Black Lotus", id: 17284322, description: "No longer active"},
+                { name: "[TS] The Salieri", id: 15386109, description: "No Longer active"},
+                { name: "[FACILITY-92] Scorpion Brigade", id: 32483958, description: "Currently Not Active"},
+                { name: "SB-UNKNOWN-SB", id: 32659214, description: "No longer active"},
+                { name: "[FACILITY-24] Scorpion Brigade", id: 17356636, description: "Currently Not Active"},
+                { name: "MEN | Mafia El Noobio", id: 33364989, description: "Currently Not Active"},
+                { name: "Drago Roso", id: 33935316, description: "-", images: "mafia2-image1.jpg", "mafia2-img2.jpg", "mafia2-img3.jpg"},
+                { name: "[PS] | POLARS STRIKEFORCE", id: 34179918, description: "Currently Not Active"},
+                { name: "TBE The Black Eagles", id: 33478611, description: "-"}
             ];
 
             mafias.forEach((mafia, index) => {
-                document.write(`
-                    <div class="mafia-item" onclick="toggleDetails('mafia${index}')">
-                        <img src="images/mafia${index}-logo.jpg" alt="${mafia.name} Logo" class="mafia-logo">
-                        <span>${mafia.name}</span>
-                    </div>
-                    <div id="mafia${index}" class="mafia-details">
-                        <h2>${mafia.name}</h2>
-                        <p><a href="https://www.roblox.com/communities/${mafia.id}" target="_blank">Join on Roblox</a></p>
-                        <p>Description for ${mafia.name} goes here.</p>
-                        <div class="carousel-container">
-                            <button class="carousel-btn prev" onclick="changeImage(-1, 'mafia${index}-images')">❮</button>
-                            <img src="images/mafia${index}-image1.jpg" class="carousel-image mafia${index}-images active">
-                            <img src="images/mafia${index}-image2.jpg" class="carousel-image mafia${index}-images">
-                            <img src="images/mafia${index}-image3.jpg" class="carousel-image mafia${index}-images">
-                            <button class="carousel-btn next" onclick="changeImage(1, 'mafia${index}-images')">❯</button>
-                        </div>
-                    </div>
-                `);
-            });
+    let imagesHtml = mafia.images.map((img, imgIndex) => 
+        `<img src="images/${img}" class="carousel-image mafia${index}-images ${imgIndex === 0 ? 'active' : ''}">`
+    ).join("");
+
+    document.write(`
+        <div class="mafia-item" onclick="toggleDetails('mafia${index}')">
+            <img src="images/mafia${index}-logo.jpg" alt="${mafia.name} Logo" class="mafia-logo">
+            <span>${mafia.name}</span>
+        </div>
+        <div id="mafia${index}" class="mafia-details">
+            <h2>${mafia.name}</h2>
+            <p><a href="https://www.roblox.com/communities/${mafia.id}" target="_blank">Join on Roblox</a></p>
+            <p>${mafia.description}</p>
+            <div class="carousel-container">
+                <button class="carousel-btn prev" onclick="changeImage(-1, 'mafia${index}-images')">❮</button>
+                ${imagesHtml}
+                <button class="carousel-btn next" onclick="changeImage(1, 'mafia${index}-images')">❯</button>
+            </div>
+        </div>
+    `);
+});
+
         </script>
     </div>
 
