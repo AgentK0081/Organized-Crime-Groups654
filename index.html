@@ -3,46 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FBI TEAM ROBLOX</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
+    <title>Mafia List</title>
+    <style>
+        body {
+            background-color: #18191c;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* FBI Logos in 4 Corners */
+        .fbi-logo {
+            position: fixed;
+            width: 150px;
+            opacity: 0.08;
+            user-select: none;
+        }
+
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
+
+        /* Floating glowing particles */
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh);
+                opacity: 0.7;
+            }
+            to {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        .mafia-list {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .mafia-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #2c2f33;
+        }
+
+        .mafia-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .mafia-details {
+            display: none;
+            padding: 15px;
+            border: 1px solid #7289da;
+            background-color: #2c2f33;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: auto;
+            display: none;
+            border-radius: 5px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <a href="index.html">Home</a>
-        <a href="info.html">About</a>
-        <a href="page3.html">Future Updates</a>
+    <!-- FBI Logos in 4 Corners -->
+    <img src="images/fbi-logo.png" class="fbi-logo top-left">
+    <img src="images/fbi-logo.png" class="fbi-logo top-right">
+    <img src="images/fbi-logo.png" class="fbi-logo bottom-left">
+    <img src="images/fbi-logo.png" class="fbi-logo bottom-right">
+
+    <h1 style="text-align: center;">Mafia List</h1>
+
+    <div class="mafia-list">
+        <!-- Mafia Groups -->
+        <script>
+            const mafias = [
+                { name: "LC Black Region", id: 32947012 },
+                { name: "| Staff Team |", id: 33657066 },
+                { name: "彡Slayers彡", id: 33703067 },
+                { name: "CARTEL REAPERS CLR", id: 15414932 },
+                { name: "AB Anarchy Battalion", id: 32516858 },
+                { name: "X Gaming", id: 17307714 },
+                { name: "TBL | The Black Lotus", id: 17284322 },
+                { name: "[TS] The Salieri", id: 15386109 },
+                { name: "[FACILITY-92] Scorpion Brigade", id: 32483958 },
+                { name: "SB-UNKNOWN-SB", id: 32659214 },
+                { name: "[FACILITY-24] Scorpion Brigade", id: 17356636 },
+                { name: "MEN | Mafia El Noobio", id: 33364989 },
+                { name: "Drago Roso", id: 33935316 },
+                { name: "[PS] | POLARS STRIKEFORCE", id: 34179918 },
+                { name: "TBE The Black Eagles", id: 33478611 }
+            ];
+
+            mafias.forEach((mafia, index) => {
+                document.write(`
+                    <div class="mafia-item" onclick="toggleDetails('mafia${index}')">
+                        <img src="images/mafia${index}-logo.jpg" alt="${mafia.name} Logo" class="mafia-logo">
+                        <span>${mafia.name}</span>
+                    </div>
+                    <div id="mafia${index}" class="mafia-details">
+                        <h2>${mafia.name}</h2>
+                        <p><a href="https://www.roblox.com/communities/${mafia.id}" target="_blank">Join on Roblox</a></p>
+                        <p>Description for ${mafia.name} goes here.</p>
+                        <div class="carousel-container">
+                            <button class="carousel-btn prev" onclick="changeImage(-1, 'mafia${index}-images')">❮</button>
+                            <img src="images/mafia${index}-image1.jpg" class="carousel-image mafia${index}-images active">
+                            <img src="images/mafia${index}-image2.jpg" class="carousel-image mafia${index}-images">
+                            <img src="images/mafia${index}-image3.jpg" class="carousel-image mafia${index}-images">
+                            <button class="carousel-btn next" onclick="changeImage(1, 'mafia${index}-images')">❯</button>
+                        </div>
+                    </div>
+                `);
+            });
+        </script>
     </div>
 
-    <!-- Open Sidebar Button -->
-    <span class="openbtn" onclick="openNav()">☰</span>
+    <script>
+        function toggleDetails(id) {
+            let details = document.getElementById(id);
+            details.style.display = details.style.display === "block" ? "none" : "block";
+        }
 
-    <!-- Background Logo -->
-    <img src="images/fbi-logo.png" alt="FBI Logo" class="fbi-logo">
+        function changeImage(direction, className) {
+            let images = document.getElementsByClassName(className);
+            let activeIndex = Array.from(images).findIndex(img => img.classList.contains("active"));
 
-    <header>
-        <h1>Welcome to FBI TEAM ROBLOX</h1>
-        <p>Elite Task Force on Roblox</p>
-    </header>
+            images[activeIndex].classList.remove("active");
+            let newIndex = (activeIndex + direction + images.length) % images.length;
+            images[newIndex].classList.add("active");
+        }
 
-    <section class="content">
-        <h2>Join the Best FBI Task Force</h2>
-        <p>We uphold law and order across Roblox.</p>
-        <a href="info.html" class="btn">Learn More</a>
-    </section>
+        function createParticles() {
+            for (let i = 0; i < 50; i++) {
+                let particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDuration = Math.random() * 3 + 2 + "s";
+                document.body.appendChild(particle);
+                setTimeout(() => { particle.remove(); }, 5000);
+            }
+        }
 
-    <!-- Social Media Icons -->
-    <div class="social-icons">
-        <a href="https://www.roblox.com/communities/14942189/FBI-TEAM-ROBLOX#!/about" target="_blank">
-            <img src="images/roblox-icon.png" alt="Roblox">
-        </a>
-        <a href="https://discord.gg/yj9DtQaqQh" target="_blank">
-            <img src="images/discord-icon.png" alt="Discord">
-        </a>
-    </div>
+        setInterval(createParticles, 1000);
+    </script>
 
 </body>
 </html>
