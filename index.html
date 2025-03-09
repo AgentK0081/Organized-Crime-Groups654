@@ -183,17 +183,17 @@
                 <p>${mafia.desc}</p>
                 <div class="carousel">
                     <button class="prev" onclick="prevImage(${index})">&#10094;</button>
-                    <img id="carousel-img" src="${mafia.images[0]}">
+                    <img id="carousel-img" src="${mafia.images[3]}">
                     <button class="next" onclick="nextImage(${index})">&#10095;</button>
                 </div>
             `;
-            currentImageIndex = 0;
+            currentImageIndex = 3;
             currentMafiaIndex = index;
         }
 
         // Image Carousel Functionality
-        let currentImageIndex = 0;
-        let currentMafiaIndex = 0;
+        let currentImageIndex = 3;
+        let currentMafiaIndex = 3;
 
         function nextImage(index) {
             currentImageIndex = (currentImageIndex + 1) % mafiaData[index].images.length;
